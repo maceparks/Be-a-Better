@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BE A BETTER</title>
+  
+  <!-- Standalone Web App Meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BE BETTER">
+  <meta name="application-name" content="BE BETTER">
+  <meta name="theme-color" content="#0c0e12">
+
+  <!-- Embedded SVG Favicon & Apple Touch Icon (Matches Header Badge) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231b2230'/%3E%3Cstop offset='100%25' stop-color='%230a0d12'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='120' height='120' rx='28' fill='url(%23bg)' stroke='%2322c55e' stroke-width='4'/%3E%3Cpath d='M10 30h100M10 60h100M10 90h100M30 10v100M60 10v100M90 10v100' stroke='%2322c55e' stroke-opacity='0.08' stroke-width='1'/%3E%3Ctext x='60' y='52' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif' font-weight='900' font-size='34' fill='%2322c55e' text-anchor='middle' letter-spacing='2'%3EBE%3C/text%3E%3Ctext x='60' y='86' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif' font-weight='900' font-size='22' fill='%23f1f5f9' text-anchor='middle' letter-spacing='3'%3EBETTER%3C/text%3E%3C/svg%3E">
+
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231b2230'/%3E%3Cstop offset='100%25' stop-color='%230a0d12'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='120' height='120' rx='28' fill='url(%23bg)' stroke='%2322c55e' stroke-width='4'/%3E%3Ctext x='60' y='52' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif' font-weight='900' font-size='34' fill='%2322c55e' text-anchor='middle' letter-spacing='2'%3EBE%3C/text%3E%3Ctext x='60' y='86' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif' font-weight='900' font-size='22' fill='%23f1f5f9' text-anchor='middle' letter-spacing='3'%3EBETTER%3C/text%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      --accent: #22c55e;
+      --accent-glow: rgba(34, 197, 94, 0.2);
+      --accent-subtle: rgba(34, 197, 94, 0.1);
+      --bg: #0c0e12;
+      --surface: #13171f;
+      --surface-hover: #181d27;
+      --border: #242b3b;
+      --border-strong: #333d52;
+      --text: #f1f5f9;
+      --text-muted: #8e9bb0;
+      --text-dim: #546075;
+      --danger: #ef4444;
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase !important;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 70px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      padding: 16px 14px;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .badge-icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 8px var(--accent-glow));
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-icon {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-icon:hover {
+      background: var(--surface-hover);
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    /* WEEK SELECTOR TOOLBAR */
+    .week-toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .week-nav-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 10px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .week-nav-btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-strong);
+      color: var(--text);
+    }
+
+    .week-details {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .week-range {
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: var(--text);
+    }
+
+    .week-status-badge {
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .jump-btn {
+      background: var(--accent-subtle);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+
+    /* DAY NAV TABS */
+    .day-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .tab-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 2px;
+      border-radius: var(--radius);
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn .tab-count {
+      font-size: 0.65rem;
+      font-weight: 900;
+      opacity: 0.7;
+    }
+
+    .tab-btn.active {
+      background: var(--surface-hover);
+      border-color: var(--accent);
+      color: var(--text);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .tab-btn.active .tab-count {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    .tab-btn.today::after {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 0;
+      margin-top: 4px;
+    }
+
+    /* PROGRESS BAR CARD */
+    .progress-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      height: 8px;
+      background: var(--bg);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    /* SECTION HEADERS */
+    .section-title {
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin: 16px 0 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--accent);
+      background: var(--accent-subtle);
+      border: 1px solid var(--accent);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* CHORE LIST & ITEMS */
+    .chore-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .chore-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+
+    .chore-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-strong);
+    }
+
+    .chore-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-grow: 1;
+    }
+
+    .checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--border-strong);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .chore-card.done .checkbox {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+
+    .chore-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    .chore-card.done .chore-title {
+      color: var(--text-dim);
+      text-decoration: line-through;
+    }
+
+    .chore-tag {
+      font-size: 0.6rem;
+      font-weight: 900;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .chore-card.done .chore-tag {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    /* WEEKEND VIEW */
+    .weekend-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 16px;
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    .weekend-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 1.2px;
+      margin-bottom: 8px;
+    }
+
+    .weekend-desc {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .btn-review {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 10px 18px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+
+    /* BOTTOM BAR */
+    .footer-actions {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+
+    .action-btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--accent);
+    }
+
+    /* MODAL BASE */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 14px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .modal-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    /* PALETTE PICKER */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .color-chip {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+
+    .color-chip:hover, .color-chip.active {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+
+    .color-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+
+    .color-label {
+      font-size: 0.65rem;
+      font-weight: 900;
+    }
+
+    /* MANAGE CHORES FORM */
+    .add-chore-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--bg);
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .input-text {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      outline: none;
+    }
+
+    .input-text:focus {
+      border-color: var(--accent);
+    }
+
+    .type-select-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .type-radio-label {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .type-radio-label.selected {
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+      color: var(--accent);
+    }
+
+    .btn-submit {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .manage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .manage-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 6px;
+      gap: 8px;
+    }
+
+    .manage-item-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .btn-del {
+      background: transparent;
+      border: none;
+      color: var(--danger);
+      font-weight: 900;
+      cursor: pointer;
+      padding: 4px;
+      font-size: 0.8rem;
+    }
+
+    /* 9:16 SCORECARD */
+    .scorecard-9-16 {
+      aspect-ratio: 9 / 16;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #13171f 0%, #0c0e12 100%);
+      border: 2px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      position: relative;
+    }
+
+    .scorecard-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .card-badge {
+      width: 54px;
+      height: 54px;
+    }
+
+    .scorecard-stats {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .card-big-num {
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 0.9;
+    }
+
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .card-breakdown {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .card-stat-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card-stat-val {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .card-stat-lbl {
+      font-size: 0.58rem;
+      font-weight: 800;
+      color: var(--text-dim);
+    }
+
+    .scorecard-footer {
+      text-align: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="brand" onclick="jumpToCurrentWeek()">
+        <!-- DYNAMIC BE BETTER SVG EMBLEM -->
+        <svg id="headerEmblem" class="badge-icon" viewBox="0 0 120 120">
+          <defs>
+            <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1f2737"/>
+              <stop offset="100%" stop-color="#0d1117"/>
+            </linearGradient>
+          </defs>
+          <rect width="120" height="120" rx="28" fill="url(#badgeGrad)" stroke="var(--accent)" stroke-width="4"/>
+          <path d="M10 30h100M10 60h100M10 90h100M30 10v100M60 10v100M90 10v100" stroke="var(--accent)" stroke-opacity="0.12" stroke-width="1.2"/>
+          <text x="60" y="52" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="34" fill="var(--accent)" text-anchor="middle" letter-spacing="2">BE</text>
+          <text x="60" y="86" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="22" fill="#f1f5f9" text-anchor="middle" letter-spacing="3">BETTER</text>
+        </svg>
+        <div>
+          <h1 class="brand-title">BE A BETTER</h1>
+          <div class="brand-subtitle">FATHERHOOD & MARRIAGE STEWARDSHIP</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" onclick="openModal('colorModal')" title="COLOR PALETTE">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2z"></path>
+          </svg>
+        </button>
+        <button class="btn-icon" onclick="openModal('choreModal')" title="MANAGE CHORES">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- WEEK NAVIGATION TOOLBAR -->
+    <div class="week-toolbar">
+      <button class="week-nav-btn" onclick="shiftWeek(-1)">
+        ◀ PREV WEEK
+      </button>
+      <div class="week-details">
+        <div class="week-range" id="weekRangeLabel">WEEK OF OCT 26 - OCT 30</div>
+        <div class="week-status-badge" id="weekStatusBadge">CURRENT WEEK</div>
+        <button class="jump-btn" id="jumpCurrentBtn" style="display:none;" onclick="jumpToCurrentWeek()">JUMP TO THIS WEEK</button>
+      </div>
+      <button class="week-nav-btn" onclick="shiftWeek(1)">
+        NEXT WEEK ▶
+      </button>
+    </div>
+
+    <!-- WEEKDAY NAV TABS (MON-FRI) -->
+    <div class="day-tabs" id="dayTabsContainer">
+      <!-- Injected dynamically -->
+    </div>
+
+    <!-- PROGRESS CARD -->
+    <div class="progress-card">
+      <div class="progress-meta">
+        <span id="activeDayLabel">MONDAY EXECUTION</span>
+        <span id="activeProgressStats">0 / 0 COMPLETED (0%)</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+    </div>
+
+    <!-- CONTENT AREA -->
+    <div id="contentArea">
+      <!-- DAILY CHORES SECTION -->
+      <div class="section-title">
+        <span>DAILY DISCIPLINES</span>
+        <span class="section-badge">RESETS EVERY DAY</span>
+      </div>
+      <div class="chore-list" id="dailyList"></div>
+
+      <!-- WEEKLY CHORES SECTION -->
+      <div class="section-title">
+        <span>WEEKLY MASTER CHORES</span>
+        <span class="section-badge">STAYS DONE ALL WEEK</span>
+      </div>
+      <div class="chore-list" id="weeklyList"></div>
+    </div>
+
+    <!-- WEEKEND REST CARD (HIDDEN BY DEFAULT) -->
+    <div id="weekendCard" class="weekendCard" style="display: none;">
+      <div class="weekend-card">
+        <div class="weekend-title">WEEKEND FAMILY PROTOCOL</div>
+        <div class="weekend-desc">NO SCHEDULED CHORES. RECHARGE, LEAD, BE FULLY PRESENT WITH YOUR WIFE AND CHILDREN.</div>
+        <button class="btn-review" onclick="selectDay(4)">REVIEW FRIDAY LOG</button>
+      </div>
+    </div>
+
+    <!-- FOOTER ACTIONS -->
+    <div class="footer-actions">
+      <button class="action-btn" onclick="openScorecard()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6m-6 4h6m-6-8h6"/></svg>
+        WEEKLY SCORECARD
+      </button>
+      <button class="action-btn" onclick="copyWeeklySummary()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+        COPY REPORT TEXT
+      </button>
+    </div>
+  </div>
+
+  <!-- COLOR SCHEME MODAL -->
+  <div class="modal-overlay" id="colorModal">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">CHOOSE ACCENT COLOR</div>
+        <button class="close-btn" onclick="closeModal('colorModal')">✕</button>
+      </div>
+      <div class="color-grid" id="paletteGrid">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MANAGE CHORES MODAL -->
+  <div class="modal-overlay" id="choreModal">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">MANAGE CHORE LISTS</div>
+        <button class="close-btn" onclick="closeModal('choreModal')">✕</button>
+      </div>
+
+      <!-- ADD NEW CHORE -->
+      <div class="add-chore-box">
+        <input type="text" id="newChoreTitle" class="input-text" placeholder="ENTER NEW CHORE NAME...">
+        <div class="type-select-wrap">
+          <div class="type-radio-label selected" id="typeDaily" onclick="setNewChoreType('daily')">DAILY REPEAT</div>
+          <div class="type-radio-label" id="typeWeekly" onclick="setNewChoreType('weekly')">WEEKLY ONCE</div>
+        </div>
+        <button class="btn-submit" onclick="addNewChore()">+ ADD TO ROSTER</button>
+      </div>
+
+      <div class="section-title">
+        <span>CURRENT REGISTERED CHORES</span>
+      </div>
+      <div class="manage-list" id="manageListContainer"></div>
+
+      <button class="action-btn" style="width:100%; margin-top:8px;" onclick="resetChoreDefaults()">
+        RESTORE ORIGINAL DEFAULTS
+      </button>
+    </div>
+  </div>
+
+  <!-- 9:16 SCORECARD MODAL -->
+  <div class="modal-overlay" id="scorecardModal">
+    <div class="modal" style="background: transparent; border: none; box-shadow: none; max-width: 360px;">
+      <div class="scorecard-9-16" id="scorecardElement">
+        <div class="scorecard-header">
+          <svg class="card-badge" viewBox="0 0 120 120">
+            <rect width="120" height="120" rx="28" fill="#13171f" stroke="var(--accent)" stroke-width="4"/>
+            <text x="60" y="52" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="34" fill="var(--accent)" text-anchor="middle" letter-spacing="2">BE</text>
+            <text x="60" y="86" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="22" fill="#f1f5f9" text-anchor="middle" letter-spacing="3">BETTER</text>
+          </svg>
+          <div style="font-size:0.9rem; font-weight:900; color:var(--text); margin-top:4px;">BE A BETTER</div>
+          <div style="font-size:0.6rem; font-weight:800; color:var(--text-muted);" id="cardWeekDate">WEEKLY EXECUTION REPORT</div>
+        </div>
+
+        <div class="scorecard-stats">
+          <div class="card-big-num" id="cardTotalPct">0%</div>
+          <div class="card-label">TOTAL WEEKLY DISCIPLINES COMPLETED</div>
+
+          <div class="card-breakdown">
+            <div class="card-stat-col">
+              <div class="card-stat-val" id="cardDailyStat">0/0</div>
+              <div class="card-stat-lbl">DAILY LOGS</div>
+            </div>
+            <div class="card-stat-col" style="border-left:1px solid var(--border); padding-left:14px;">
+              <div class="card-stat-val" id="cardWeeklyStat">0/0</div>
+              <div class="card-stat-lbl">WEEKLY MASTER</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scorecard-footer">
+          STEWARDSHIP • FATHERHOOD • MARRIAGE
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:14px; width:100%;">
+        <button class="btn-submit" style="flex:1;" onclick="copyWeeklySummary()">COPY TEXT SUMMARY</button>
+        <button class="action-btn" style="flex:1; background:var(--surface);" onclick="closeModal('scorecardModal')">CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----------------------------------------------------
+    // CONSTANTS & DEFAULTS
+    // ----------------------------------------------------
+    const DEFAULT_DAILY = [
+      { id: "d_kids_morning", title: "WAKE UP AND GET THE KIDS READY FOR SCHOOL" },
+      { id: "d_trash", title: "TAKE OUT THE TRASH" },
+      { id: "d_dishes", title: "DO THE DISHES" },
+      { id: "d_laundry", title: "ONE LOAD OF LAUNDRY" },
+      { id: "d_declutter", title: "HOUSE DECLUTTER" }
+    ];
+
+    const DEFAULT_WEEKLY = [
+      { id: "w_sweep", title: "SWEEP THE HOUSE" },
+      { id: "w_vacuum_house", title: "VACUUM THE HOUSE" },
+      { id: "w_wipe_kitchen", title: "WIPE DOWN KITCHEN" },
+      { id: "w_kids_laundry", title: "FACILITATE KIDS LAUNDRY" },
+      { id: "w_kids_showers", title: "FACILITATE KIDS SHOWERS" },
+      { id: "w_kids_bath", title: "CLEAN KIDS BATHROOM" },
+      { id: "w_parent_bath", title: "CLEAN PARENT BATHROOM" },
+      { id: "w_vacuum_couches", title: "VACUUM COUCHES" }
+    ];
+
+    const PALETTES = [
+      { id: "green", name: "TACTICAL GREEN", hex: "#22c55e", glow: "rgba(34, 197, 94, 0.25)", subtle: "rgba(34, 197, 94, 0.12)" },
+      { id: "amber", name: "FORGE AMBER", hex: "#f59e0b", glow: "rgba(245, 158, 11, 0.25)", subtle: "rgba(245, 158, 11, 0.12)" },
+      { id: "blue", name: "STEEL BLUE", hex: "#38bdf8", glow: "rgba(56, 189, 248, 0.25)", subtle: "rgba(56, 189, 248, 0.12)" },
+      { id: "crimson", name: "CRIMSON", hex: "#ef4444", glow: "rgba(239, 68, 68, 0.25)", subtle: "rgba(239, 68, 68, 0.12)" },
+      { id: "monochrome", name: "MONOCHROME", hex: "#e2e8f0", glow: "rgba(226, 232, 240, 0.25)", subtle: "rgba(226, 232, 240, 0.12)" },
+      { id: "violet", name: "AMETHYST", hex: "#a855f7", glow: "rgba(168, 85, 247, 0.25)", subtle: "rgba(168, 85, 247, 0.12)" }
+    ];
+
+    const DAYS = ["MON", "TUE", "WED", "THU", "FRI"];
+
+    // ----------------------------------------------------
+    // STATE MANAGEMENT
+    // ----------------------------------------------------
+    let state = {
+      accent: "green",
+      customDaily: null,
+      customWeekly: null,
+      weekOffset: 0, // 0 = current week, -1 = last week, etc.
+      activeDayIndex: 0, // 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri
+      newChoreType: "daily",
+      logs: {} // format: { 'YYYY-MM-DD': { choreId: true }, 'YYYY-Wxx': { choreId: true } }
+    };
+
+    // Load from storage
+    function loadSavedState() {
+      try {
+        const savedAccent = localStorage.getItem("bab_accent");
+        if (savedAccent) state.accent = savedAccent;
+
+        const savedDaily = localStorage.getItem("bab_roster_daily");
+        if (savedDaily) state.customDaily = JSON.parse(savedDaily);
+
+        const savedWeekly = localStorage.getItem("bab_roster_weekly");
+        if (savedWeekly) state.customWeekly = JSON.parse(savedWeekly);
+
+        const savedLogs = localStorage.getItem("bab_logs_master");
+        if (savedLogs) state.logs = JSON.parse(savedLogs);
+      } catch (e) {
+        console.warn("Storage load error:", e);
+      }
+
+      // Detect current day of week (Monday=1, Friday=5, Sat=6, Sun=0)
+      const now = new Date();
+      const currentDay = now.getDay();
+      if (currentDay >= 1 && currentDay <= 5) {
+        state.activeDayIndex = currentDay - 1;
+      } else {
+        state.activeDayIndex = 5; // Weekend state
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem("bab_accent", state.accent);
+        if (state.customDaily) localStorage.setItem("bab_roster_daily", JSON.stringify(state.customDaily));
+        if (state.customWeekly) localStorage.setItem("bab_roster_weekly", JSON.stringify(state.customWeekly));
+        localStorage.setItem("bab_logs_master", JSON.stringify(state.logs));
+      } catch (e) {
+        console.warn("Storage save error:", e);
+      }
+    }
+
+    function getDailyRoster() {
+      return state.customDaily || DEFAULT_DAILY;
+    }
+
+    function getWeeklyRoster() {
+      return state.customWeekly || DEFAULT_WEEKLY;
+    }
+
+    // ----------------------------------------------------
+    // DATE & WEEK CALCULATIONS
+    // ----------------------------------------------------
+    function getMondayOfOffset(offsetWeeks) {
+      const now = new Date();
+      const day = now.getDay(); // 0 is Sun, 1 is Mon...
+      const diffToMon = (day === 0 ? -6 : 1) - day;
+      const monday = new Date(now);
+      monday.setDate(now.getDate() + diffToMon + (offsetWeeks * 7));
+      monday.setHours(0, 0, 0, 0);
+      return monday;
+    }
+
+    function getWeekKey(mondayDate) {
+      const target = new Date(mondayDate.valueOf());
+      const dayNr = (mondayDate.getDay() + 6) % 7;
+      target.setDate(target.getDate() - dayNr + 3);
+      const firstThursday = target.valueOf();
+      target.setMonth(0, 1);
+      if (target.getDay() !== 4) {
+        target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+      }
+      const weekNum = 1 + Math.ceil((firstThursday - target) / 604800000);
+      return `${mondayDate.getFullYear()}-W${String(weekNum).padStart(2, "0")}`;
+    }
+
+    function formatDateKey(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const d = String(dateObj.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function getWeekDays(mondayDate) {
+      const days = [];
+      for (let i = 0; i < 5; i++) {
+        const d = new Date(mondayDate);
+        d.setDate(mondayDate.getDate() + i);
+        days.push(d);
+      }
+      return days;
+    }
+
+    // ----------------------------------------------------
+    // ACCENT COLOR ENGINE
+    // ----------------------------------------------------
+    function applyAccent(paletteId) {
+      const pal = PALETTES.find(p => p.id === paletteId) || PALETTES[0];
+      state.accent = pal.id;
+      document.documentElement.style.setProperty("--accent", pal.hex);
+      document.documentElement.style.setProperty("--accent-glow", pal.glow);
+      document.documentElement.style.setProperty("--accent-subtle", pal.subtle);
+      saveState();
+      renderPaletteGrid();
+    }
+
+    function renderPaletteGrid() {
+      const container = document.getElementById("paletteGrid");
+      container.innerHTML = PALETTES.map(p => `
+        <div class="color-chip ${state.accent === p.id ? 'active' : ''}" onclick="applyAccent('${p.id}')">
+          <div class="color-dot" style="background:${p.hex}; box-shadow:0 0 8px ${p.glow};"></div>
+          <div class="color-label">${p.name}</div>
+        </div>
+      `).join("");
+    }
+
+    // ----------------------------------------------------
+    // NAVIGATION & SELECTION
+    // ----------------------------------------------------
+    function shiftWeek(delta) {
+      state.weekOffset += delta;
+      // Default to Monday when navigating weeks
+      if (state.activeDayIndex > 4) state.activeDayIndex = 0;
+      renderApp();
+    }
+
+    function jumpToCurrentWeek() {
+      state.weekOffset = 0;
+      const currentDay = new Date().getDay();
+      state.activeDayIndex = (currentDay >= 1 && currentDay <= 5) ? (currentDay - 1) : 5;
+      renderApp();
+    }
+
+    function selectDay(index) {
+      state.activeDayIndex = index;
+      renderApp();
+    }
+
+    // ----------------------------------------------------
+    // LOGGING ACTIONS
+    // ----------------------------------------------------
+    function toggleDailyChore(choreId) {
+      const monday = getMondayOfOffset(state.weekOffset);
+      const weekDays = getWeekDays(monday);
+      const targetDate = weekDays[state.activeDayIndex];
+      const dateKey = formatDateKey(targetDate);
+
+      if (!state.logs[dateKey]) state.logs[dateKey] = {};
+      state.logs[dateKey][choreId] = !state.logs[dateKey][choreId];
+
+      saveState();
+      renderApp();
+    }
+
+    function toggleWeeklyChore(choreId) {
+      const monday = getMondayOfOffset(state.weekOffset);
+      const weekKey = getWeekKey(monday);
+
+      if (!state.logs[weekKey]) state.logs[weekKey] = {};
+      state.logs[weekKey][choreId] = !state.logs[weekKey][choreId];
+
+      saveState();
+      renderApp();
+    }
+
+    // ----------------------------------------------------
+    // MAIN RENDER PIPELINE
+    // ----------------------------------------------------
+    function renderApp() {
+      const monday = getMondayOfOffset(state.weekOffset);
+      const weekDays = getWeekDays(monday);
+      const weekKey = getWeekKey(monday);
+      const friday = weekDays[4];
+
+      // Format Week Label (e.g. "WEEK OF OCT 26 - OCT 30, 2026")
+      const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+      const monStr = `${monthNames[monday.getMonth()]} ${monday.getDate()}`;
+      const friStr = `${monthNames[friday.getMonth()]} ${friday.getDate()}, ${friday.getFullYear()}`;
+      document.getElementById("weekRangeLabel").textContent = `WEEK OF ${monStr} - ${friStr}`;
+
+      // Status indicator
+      const statusBadge = document.getElementById("weekStatusBadge");
+      const jumpBtn = document.getElementById("jumpCurrentBtn");
+      if (state.weekOffset === 0) {
+        statusBadge.textContent = "CURRENT ACTIVE WEEK";
+        statusBadge.style.color = "var(--accent)";
+        jumpBtn.style.display = "none";
+      } else {
+        statusBadge.textContent = state.weekOffset < 0 ? "PAST HISTORICAL WEEK" : "FUTURE PLANNED WEEK";
+        statusBadge.style.color = "var(--text-muted)";
+        jumpBtn.style.display = "inline-block";
+      }
+
+      // Check today's calendar string for active dot
+      const todayStr = formatDateKey(new Date());
+
+      // Render 5 Day Tabs
+      const tabsContainer = document.getElementById("dayTabsContainer");
+      tabsContainer.innerHTML = weekDays.map((d, idx) => {
+        const dKey = formatDateKey(d);
+        const dailyItems = getDailyRoster();
+        const doneDaily = dailyItems.filter(item => state.logs[dKey] && state.logs[dKey][item.id]).length;
+        const isToday = (todayStr === dKey);
+        const isActive = (state.activeDayIndex === idx);
+
+        return `
+          <button class="tab-btn ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}" onclick="selectDay(${idx})">
+            <span>${DAYS[idx]}</span>
+            <span class="tab-count">${doneDaily}/${dailyItems.length}</span>
+          </button>
+        `;
+      }).join("");
+
+      // Handle Weekend View vs Weekday View
+      const isWeekend = (state.activeDayIndex > 4);
+      const contentArea = document.getElementById("contentArea");
+      const weekendCard = document.getElementById("weekendCard");
+
+      if (isWeekend) {
+        contentArea.style.display = "none";
+        weekendCard.style.display = "block";
+        document.getElementById("activeDayLabel").textContent = "WEEKEND REST PROTOCOL";
+        document.getElementById("activeProgressStats").textContent = "FAMILY FOCUS";
+        document.getElementById("progressBarFill").style.width = "100%";
+        return;
+      } else {
+        contentArea.style.display = "block";
+        weekendCard.style.display = "none";
+      }
+
+      // Render Active Weekday Chores
+      const activeDate = weekDays[state.activeDayIndex];
+      const activeDateKey = formatDateKey(activeDate);
+      const activeDayName = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"][state.activeDayIndex];
+
+      const dailyRoster = getDailyRoster();
+      const weeklyRoster = getWeeklyRoster();
+
+      // Render Daily List
+      const dailyList = document.getElementById("dailyList");
+      dailyList.innerHTML = dailyRoster.map(item => {
+        const isDone = Boolean(state.logs[activeDateKey] && state.logs[activeDateKey][item.id]);
+        return `
+          <div class="chore-card ${isDone ? 'done' : ''}" onclick="toggleDailyChore('${item.id}')">
+            <div class="chore-left">
+              <div class="checkbox">
+                ${isDone ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+              </div>
+              <span class="chore-title">${item.title}</span>
+            </div>
+            <span class="chore-tag">DAILY</span>
+          </div>
+        `;
+      }).join("");
+
+      // Render Weekly Master List (stays done all week)
+      const weeklyList = document.getElementById("weeklyList");
+      weeklyList.innerHTML = weeklyRoster.map(item => {
+        const isDone = Boolean(state.logs[weekKey] && state.logs[weekKey][item.id]);
+        return `
+          <div class="chore-card ${isDone ? 'done' : ''}" onclick="toggleWeeklyChore('${item.id}')">
+            <div class="chore-left">
+              <div class="checkbox">
+                ${isDone ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+              </div>
+              <span class="chore-title">${item.title}</span>
+            </div>
+            <span class="chore-tag">WEEKLY</span>
+          </div>
+        `;
+      }).join("");
+
+      // Calculate Day Progress
+      const doneDailyCount = dailyRoster.filter(i => state.logs[activeDateKey] && state.logs[activeDateKey][i.id]).length;
+      const totalDaily = dailyRoster.length;
+      const dayPct = totalDaily > 0 ? Math.round((doneDailyCount / totalDaily) * 100) : 0;
+
+      document.getElementById("activeDayLabel").textContent = `${activeDayName} EXECUTION`;
+      document.getElementById("activeProgressStats").textContent = `${doneDailyCount} / ${totalDaily} COMPLETED (${dayPct}%)`;
+      document.getElementById("progressBarFill").style.width = `${dayPct}%`;
+    }
+
+    // ----------------------------------------------------
+    // IN-APP CHORE MANAGER
+    // ----------------------------------------------------
+    function setNewChoreType(type) {
+      state.newChoreType = type;
+      document.getElementById("typeDaily").classList.toggle("selected", type === "daily");
+      document.getElementById("typeWeekly").classList.toggle("selected", type === "weekly");
+    }
+
+    function addNewChore() {
+      const input = document.getElementById("newChoreTitle");
+      const title = input.value.trim().toUpperCase();
+      if (!title) return;
+
+      const newId = (state.newChoreType === "daily" ? "d_" : "w_") + Date.now().toString(36);
+      if (state.newChoreType === "daily") {
+        if (!state.customDaily) state.customDaily = [...DEFAULT_DAILY];
+        state.customDaily.push({ id: newId, title });
+      } else {
+        if (!state.customWeekly) state.customWeekly = [...DEFAULT_WEEKLY];
+        state.customWeekly.push({ id: newId, title });
+      }
+
+      input.value = "";
+      saveState();
+      renderManageList();
+      renderApp();
+    }
+
+    function deleteChore(id, type) {
+      if (type === "daily") {
+        if (!state.customDaily) state.customDaily = [...DEFAULT_DAILY];
+        state.customDaily = state.customDaily.filter(item => item.id !== id);
+      } else {
+        if (!state.customWeekly) state.customWeekly = [...DEFAULT_WEEKLY];
+        state.customWeekly = state.customWeekly.filter(item => item.id !== id);
+      }
+      saveState();
+      renderManageList();
+      renderApp();
+    }
+
+    function resetChoreDefaults() {
+      if (!confirm("RESTORE ORIGINAL DEFAULT CHORES?")) return;
+      state.customDaily = null;
+      state.customWeekly = null;
+      localStorage.removeItem("bab_roster_daily");
+      localStorage.removeItem("bab_roster_weekly");
+      saveState();
+      renderManageList();
+      renderApp();
+    }
+
+    function renderManageList() {
+      const container = document.getElementById("manageListContainer");
+      const daily = getDailyRoster();
+      const weekly = getWeeklyRoster();
+
+      let html = "";
+      daily.forEach(item => {
+        html += `
+          <div class="manage-item">
+            <div class="manage-item-info">
+              <span class="chore-tag">DAILY</span>
+              <span>${item.title}</span>
+            </div>
+            <button class="btn-del" onclick="deleteChore('${item.id}', 'daily')">✕</button>
+          </div>
+        `;
+      });
+
+      weekly.forEach(item => {
+        html += `
+          <div class="manage-item">
+            <div class="manage-item-info">
+              <span class="chore-tag">WEEKLY</span>
+              <span>${item.title}</span>
+            </div>
+            <button class="btn-del" onclick="deleteChore('${item.id}', 'weekly')">✕</button>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // ----------------------------------------------------
+    // 9:16 SCORECARD & TEXT EXPORT
+    // ----------------------------------------------------
+    function getWeekTallyStats() {
+      const monday = getMondayOfOffset(state.weekOffset);
+      const weekDays = getWeekDays(monday);
+      const weekKey = getWeekKey(monday);
+      const dailyRoster = getDailyRoster();
+      const weeklyRoster = getWeeklyRoster();
+
+      let dailyCompleted = 0;
+      const totalDailySlots = dailyRoster.length * 5;
+
+      weekDays.forEach(d => {
+        const dKey = formatDateKey(d);
+        if (state.logs[dKey]) {
+          dailyRoster.forEach(item => {
+            if (state.logs[dKey][item.id]) dailyCompleted++;
+          });
+        }
+      });
+
+      let weeklyCompleted = 0;
+      const totalWeeklySlots = weeklyRoster.length;
+      if (state.logs[weekKey]) {
+        weeklyRoster.forEach(item => {
+          if (state.logs[weekKey][item.id]) weeklyCompleted++;
+        });
+      }
+
+      const totalCompleted = dailyCompleted + weeklyCompleted;
+      const totalPossible = totalDailySlots + totalWeeklySlots;
+      const totalPct = totalPossible > 0 ? Math.round((totalCompleted / totalPossible) * 100) : 0;
+
+      return {
+        dailyCompleted,
+        totalDailySlots,
+        weeklyCompleted,
+        totalWeeklySlots,
+        totalCompleted,
+        totalPossible,
+        totalPct,
+        monday,
+        friday: weekDays[4]
+      };
+    }
+
+    function openScorecard() {
+      const stats = getWeekTallyStats();
+      const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+      const dateRangeStr = `${monthNames[stats.monday.getMonth()]} ${stats.monday.getDate()} - ${monthNames[stats.friday.getMonth()]} ${stats.friday.getDate()}, ${stats.friday.getFullYear()}`;
+
+      document.getElementById("cardWeekDate").textContent = `WEEK OF ${dateRangeStr}`;
+      document.getElementById("cardTotalPct").textContent = `${stats.totalPct}%`;
+      document.getElementById("cardDailyStat").textContent = `${stats.dailyCompleted}/${stats.totalDailySlots}`;
+      document.getElementById("cardWeeklyStat").textContent = `${stats.weeklyCompleted}/${stats.totalWeeklySlots}`;
+
+      openModal("scorecardModal");
+    }
+
+    function copyWeeklySummary() {
+      const stats = getWeekTallyStats();
+      const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+      const dateRangeStr = `${monthNames[stats.monday.getMonth()]} ${stats.monday.getDate()} - ${monthNames[stats.friday.getMonth()]} ${stats.friday.getDate()}, ${stats.friday.getFullYear()}`;
+
+      const text = `BE A BETTER - WEEKLY DISCIPLINE REPORT\n` +
+                   `WEEK: ${dateRangeStr}\n` +
+                   `TOTAL COMPLETION: ${stats.totalPct}%\n` +
+                   `DAILY DISCIPLINES: ${stats.dailyCompleted}/${stats.totalDailySlots}\n` +
+                   `WEEKLY MASTER CHORES: ${stats.weeklyCompleted}/${stats.totalWeeklySlots}\n` +
+                   `STEWARDSHIP FOR MY WIFE AND CHILDREN.`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert("WEEKLY REPORT COPIED TO CLIPBOARD!");
+      }).catch(() => {
+        prompt("COPY YOUR WEEKLY REPORT:", text);
+      });
+    }
+
+    // ----------------------------------------------------
+    // MODAL UTILS
+    // ----------------------------------------------------
+    function openModal(id) {
+      if (id === "colorModal") renderPaletteGrid();
+      if (id === "choreModal") renderManageList();
+      document.getElementById(id).classList.add("open");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+    }
+
+    // Close modal when tapping outside card
+    window.addEventListener("click", (e) => {
+      if (e.target.classList.contains("modal-overlay")) {
+        e.target.classList.remove("open");
+      }
+    });
+
+    // ----------------------------------------------------
+    // INITIALIZATION
+    // ----------------------------------------------------
+    loadSavedState();
+    applyAccent(state.accent);
+    renderApp();
+  </script>
+</body>
+</html>
