@@ -12,16 +12,85 @@
   <meta name="application-name" content="BE BETTER">
   <meta name="theme-color" content="#0c0e12">
 
-  <!-- Embedded SVG Favicon & Apple Touch Icon (Matches Header Badge) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231b2230'/%3E%3Cstop offset='100%25' stop-color='%230a0d12'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='120' height='120' rx='28' fill='url(%23bg)' stroke='%2322c55e' stroke-width='4'/%3E%3Cpath d='M10 30h100M10 60h100M10 90h100M30 10v100M60 10v100M90 10v100' stroke='%2322c55e' stroke-opacity='0.08' stroke-width='1'/%3E%3Ctext x='60' y='52' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif' font-weight='900' font-size='34' fill='%2322c55e' text-anchor='middle' letter-spacing='2'%3EBE%3C/text%3E%3Ctext x='60' y='86' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif' font-weight='900' font-size='22' fill='%23f1f5f9' text-anchor='middle' letter-spacing='3'%3EBETTER%3C/text%3E%3C/svg%3E">
+  <!-- Dynamic PNG Elements for Phone Home Screen Badges -->
+  <link id="dynamicFavicon" rel="icon" type="image/png">
+  <link id="dynamicAppleIcon" rel="apple-touch-icon">
+  <link id="dynamicManifest" rel="manifest">
 
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231b2230'/%3E%3Cstop offset='100%25' stop-color='%230a0d12'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='120' height='120' rx='28' fill='url(%23bg)' stroke='%2322c55e' stroke-width='4'/%3E%3Ctext x='60' y='52' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif' font-weight='900' font-size='34' fill='%2322c55e' text-anchor='middle' letter-spacing='2'%3EBE%3C/text%3E%3Ctext x='60' y='86' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif' font-weight='900' font-size='22' fill='%23f1f5f9' text-anchor='middle' letter-spacing='3'%3EBETTER%3C/text%3E%3C/svg%3E">
+  <script>
+    (function generateAppIcon() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      const r = 110;
+      ctx.beginPath();
+      ctx.moveTo(r, 0);
+      ctx.lineTo(512 - r, 0);
+      ctx.quadraticCurveTo(512, 0, 512, r);
+      ctx.lineTo(512, 512 - r);
+      ctx.quadraticCurveTo(512, 512, 512 - r, 512);
+      ctx.lineTo(r, 512);
+      ctx.quadraticCurveTo(0, 512, 0, 512 - r);
+      ctx.lineTo(0, r);
+      ctx.quadraticCurveTo(0, 0, r, 0);
+      ctx.closePath();
+      ctx.fillStyle = '#11151d';
+      ctx.fill();
+
+      ctx.lineWidth = 18;
+      ctx.strokeStyle = '#22c55e';
+      ctx.stroke();
+
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = 'rgba(34, 197, 94, 0.12)';
+      [128, 256, 384].forEach(pos => {
+        ctx.beginPath();
+        ctx.moveTo(pos, 30);
+        ctx.lineTo(pos, 482);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(30, pos);
+        ctx.lineTo(482, pos);
+        ctx.stroke();
+      });
+
+      ctx.fillStyle = '#22c55e';
+      ctx.font = '900 150px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('BE', 256, 210);
+
+      ctx.fillStyle = '#f1f5f9';
+      ctx.font = '900 96px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillText('BETTER', 256, 350);
+
+      const pngData = canvas.toDataURL('image/png');
+      document.getElementById('dynamicFavicon').href = pngData;
+      document.getElementById('dynamicAppleIcon').href = pngData;
+
+      const manifest = {
+        name: "BE BETTER",
+        short_name: "BE BETTER",
+        start_url: "./index.html",
+        display: "standalone",
+        background_color: "#0c0e12",
+        theme_color: "#0c0e12",
+        icons: [{ src: pngData, sizes: "512x512", type: "image/png", purpose: "any maskable" }]
+      };
+      const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+      document.getElementById('dynamicManifest').href = URL.createObjectURL(manifestBlob);
+    })();
+  </script>
 
   <style>
     :root {
       --accent: #22c55e;
       --accent-glow: rgba(34, 197, 94, 0.2);
       --accent-subtle: rgba(34, 197, 94, 0.1);
+      --bonus-gold: #f59e0b;
+      --bonus-glow: rgba(245, 158, 11, 0.2);
       --bg: #0c0e12;
       --surface: #13171f;
       --surface-hover: #181d27;
@@ -60,7 +129,6 @@
       padding: 16px 14px;
     }
 
-    /* HEADER */
     header {
       display: flex;
       justify-content: space-between;
@@ -125,7 +193,6 @@
       color: var(--text);
     }
 
-    /* WEEK SELECTOR TOOLBAR */
     .week-toolbar {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -195,11 +262,11 @@
       cursor: pointer;
     }
 
-    /* DAY NAV TABS */
+    /* 7-DAY NAVIGATION TABS */
     .day-tabs {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
       margin-bottom: 14px;
     }
 
@@ -207,9 +274,9 @@
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 8px 2px;
+      padding: 8px 1px;
       border-radius: var(--radius);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
@@ -220,9 +287,17 @@
     }
 
     .tab-btn .tab-count {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       font-weight: 900;
-      opacity: 0.7;
+      opacity: 0.75;
+    }
+
+    .tab-btn.weekend-tab {
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .tab-btn.weekend-tab .tab-count {
+      color: var(--bonus-gold);
     }
 
     .tab-btn.active {
@@ -232,20 +307,19 @@
       box-shadow: 0 0 10px var(--accent-glow);
     }
 
-    .tab-btn.active .tab-count {
-      color: var(--accent);
-      opacity: 1;
+    .tab-btn.weekend-tab.active {
+      border-color: var(--bonus-gold);
+      box-shadow: 0 0 10px var(--bonus-glow);
     }
 
     .tab-btn.today::after {
       content: "•";
       color: var(--accent);
-      font-size: 1rem;
+      font-size: 0.9rem;
       line-height: 0;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
-    /* PROGRESS BAR CARD */
     .progress-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -283,7 +357,42 @@
       box-shadow: 0 0 8px var(--accent-glow);
     }
 
-    /* SECTION HEADERS */
+    .progress-bar-fill.bonus-fill {
+      background: var(--bonus-gold);
+      box-shadow: 0 0 8px var(--bonus-glow);
+    }
+
+    /* BONUS BANNER FOR SAT/SUN */
+    .bonus-banner {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px dashed var(--bonus-gold);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .bonus-banner-text {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--bonus-gold);
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+
+    .bonus-tag {
+      font-size: 0.6rem;
+      font-weight: 900;
+      background: var(--bonus-gold);
+      color: #000;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
     .section-title {
       font-size: 0.78rem;
       font-weight: 900;
@@ -305,7 +414,12 @@
       border-radius: 4px;
     }
 
-    /* CHORE LIST & ITEMS */
+    .section-badge.gold {
+      color: var(--bonus-gold);
+      background: rgba(245, 158, 11, 0.12);
+      border-color: var(--bonus-gold);
+    }
+
     .chore-list {
       display: flex;
       flex-direction: column;
@@ -357,6 +471,12 @@
       color: #000;
     }
 
+    .chore-card.done.bonus-done .checkbox {
+      background: var(--bonus-gold);
+      border-color: var(--bonus-gold);
+      color: #000;
+    }
+
     .chore-title {
       font-size: 0.82rem;
       font-weight: 800;
@@ -386,44 +506,12 @@
       background: var(--accent-subtle);
     }
 
-    /* WEEKEND VIEW */
-    .weekend-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 16px;
-      text-align: center;
-      margin: 16px 0;
+    .chore-card.done.bonus-done .chore-tag {
+      color: var(--bonus-gold);
+      border-color: var(--bonus-gold);
+      background: rgba(245, 158, 11, 0.12);
     }
 
-    .weekend-title {
-      font-size: 1.1rem;
-      font-weight: 900;
-      color: var(--accent);
-      letter-spacing: 1.2px;
-      margin-bottom: 8px;
-    }
-
-    .weekend-desc {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 18px;
-    }
-
-    .btn-review {
-      background: var(--accent);
-      color: #000;
-      border: none;
-      padding: 10px 18px;
-      font-size: 0.75rem;
-      font-weight: 900;
-      border-radius: var(--radius);
-      cursor: pointer;
-    }
-
-    /* BOTTOM BAR */
     .footer-actions {
       margin-top: 24px;
       display: grid;
@@ -452,12 +540,11 @@
       border-color: var(--accent);
     }
 
-    /* MODAL BASE */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(5px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -474,14 +561,14 @@
       border: 1px solid var(--border-strong);
       border-radius: var(--radius);
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       max-height: 90vh;
       overflow-y: auto;
       padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     }
 
     .modal-head {
@@ -507,7 +594,156 @@
       font-weight: 900;
     }
 
-    /* PALETTE PICKER */
+    /* REPORT CARD COMPONENT */
+    .report-card-container {
+      background: linear-gradient(180deg, #13171f 0%, #0c0e12 100%);
+      border: 2px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .rc-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .rc-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .rc-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+
+    .rc-sub {
+      font-size: 0.64rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .rc-score-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .rc-pct {
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .rc-grade {
+      font-size: 0.62rem;
+      font-weight: 900;
+      color: #000;
+      background: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+
+    .rc-highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .rc-stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .rc-stat-num {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .rc-stat-label {
+      font-size: 0.58rem;
+      font-weight: 800;
+      color: var(--text-dim);
+    }
+
+    .rc-stat-box.bonus-box {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .rc-stat-box.bonus-box .rc-stat-num {
+      color: var(--bonus-gold);
+    }
+
+    /* DAY-BY-DAY AUDIT TABLE */
+    .rc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.72rem;
+    }
+
+    .rc-table th {
+      text-align: left;
+      padding: 8px 6px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.62rem;
+      font-weight: 900;
+    }
+
+    .rc-table td {
+      padding: 8px 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-weight: 800;
+    }
+
+    .rc-table tr.weekend-row td {
+      color: var(--bonus-gold);
+    }
+
+    .status-pill {
+      font-size: 0.58rem;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .status-pill.done {
+      background: var(--accent-subtle);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .status-pill.bonus {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--bonus-gold);
+      border: 1px solid var(--bonus-gold);
+    }
+
+    .status-pill.empty {
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+
     .color-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -543,7 +779,6 @@
       font-weight: 900;
     }
 
-    /* MANAGE CHORES FORM */
     .add-chore-box {
       display: flex;
       flex-direction: column;
@@ -639,103 +874,13 @@
       padding: 4px;
       font-size: 0.8rem;
     }
-
-    /* 9:16 SCORECARD */
-    .scorecard-9-16 {
-      aspect-ratio: 9 / 16;
-      width: 100%;
-      max-width: 320px;
-      margin: 0 auto;
-      background: linear-gradient(180deg, #13171f 0%, #0c0e12 100%);
-      border: 2px solid var(--border-strong);
-      border-radius: 14px;
-      padding: 22px 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-      position: relative;
-    }
-
-    .scorecard-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 8px;
-    }
-
-    .card-badge {
-      width: 54px;
-      height: 54px;
-    }
-
-    .scorecard-stats {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      text-align: center;
-    }
-
-    .card-big-num {
-      font-size: 3.2rem;
-      font-weight: 900;
-      color: var(--accent);
-      line-height: 0.9;
-    }
-
-    .card-label {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-    }
-
-    .card-breakdown {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      display: flex;
-      justify-content: space-around;
-    }
-
-    .card-stat-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .card-stat-val {
-      font-size: 1.1rem;
-      font-weight: 900;
-      color: var(--text);
-    }
-
-    .card-stat-lbl {
-      font-size: 0.58rem;
-      font-weight: 800;
-      color: var(--text-dim);
-    }
-
-    .scorecard-footer {
-      text-align: center;
-      font-size: 0.65rem;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: 1px;
-    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- HEADER -->
     <header>
       <div class="brand" onclick="jumpToCurrentWeek()">
-        <!-- DYNAMIC BE BETTER SVG EMBLEM -->
         <svg id="headerEmblem" class="badge-icon" viewBox="0 0 120 120">
           <defs>
             <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -774,23 +919,17 @@
 
     <!-- WEEK NAVIGATION TOOLBAR -->
     <div class="week-toolbar">
-      <button class="week-nav-btn" onclick="shiftWeek(-1)">
-        ◀ PREV WEEK
-      </button>
+      <button class="week-nav-btn" onclick="shiftWeek(-1)">◀ PREV WEEK</button>
       <div class="week-details">
-        <div class="week-range" id="weekRangeLabel">WEEK OF OCT 26 - OCT 30</div>
+        <div class="week-range" id="weekRangeLabel">WEEK OF OCT 26 - NOV 1</div>
         <div class="week-status-badge" id="weekStatusBadge">CURRENT WEEK</div>
         <button class="jump-btn" id="jumpCurrentBtn" style="display:none;" onclick="jumpToCurrentWeek()">JUMP TO THIS WEEK</button>
       </div>
-      <button class="week-nav-btn" onclick="shiftWeek(1)">
-        NEXT WEEK ▶
-      </button>
+      <button class="week-nav-btn" onclick="shiftWeek(1)">NEXT WEEK ▶</button>
     </div>
 
-    <!-- WEEKDAY NAV TABS (MON-FRI) -->
-    <div class="day-tabs" id="dayTabsContainer">
-      <!-- Injected dynamically -->
-    </div>
+    <!-- 7-DAY NAVIGATION TABS (MON-SUN) -->
+    <div class="day-tabs" id="dayTabsContainer"></div>
 
     <!-- PROGRESS CARD -->
     <div class="progress-card">
@@ -803,37 +942,36 @@
       </div>
     </div>
 
-    <!-- CONTENT AREA -->
+    <!-- BONUS NOTIFICATION (SHOWN ONLY ON SAT / SUN) -->
+    <div id="bonusBanner" class="bonus-banner" style="display: none;">
+      <div class="bonus-banner-text">
+        WEEKEND EXTRA CREDIT ACTIVE: CHORES LOGGED HERE EARN BONUS POINTS AND DO NOT PENALIZE YOUR MAIN STORE.
+      </div>
+      <span class="bonus-tag">+BONUS</span>
+    </div>
+
+    <!-- CHORES CONTAINER -->
     <div id="contentArea">
-      <!-- DAILY CHORES SECTION -->
+      <!-- DAILY CHORES -->
       <div class="section-title">
-        <span>DAILY DISCIPLINES</span>
-        <span class="section-badge">RESETS EVERY DAY</span>
+        <span id="dailySectionTitle">DAILY DISCIPLINES</span>
+        <span class="section-badge" id="dailySectionBadge">RESETS EVERY DAY</span>
       </div>
       <div class="chore-list" id="dailyList"></div>
 
-      <!-- WEEKLY CHORES SECTION -->
-      <div class="section-title">
+      <!-- WEEKLY MASTER CHORES -->
+      <div class="section-title" id="weeklySectionHeader">
         <span>WEEKLY MASTER CHORES</span>
         <span class="section-badge">STAYS DONE ALL WEEK</span>
       </div>
       <div class="chore-list" id="weeklyList"></div>
     </div>
 
-    <!-- WEEKEND REST CARD (HIDDEN BY DEFAULT) -->
-    <div id="weekendCard" class="weekendCard" style="display: none;">
-      <div class="weekend-card">
-        <div class="weekend-title">WEEKEND FAMILY PROTOCOL</div>
-        <div class="weekend-desc">NO SCHEDULED CHORES. RECHARGE, LEAD, BE FULLY PRESENT WITH YOUR WIFE AND CHILDREN.</div>
-        <button class="btn-review" onclick="selectDay(4)">REVIEW FRIDAY LOG</button>
-      </div>
-    </div>
-
     <!-- FOOTER ACTIONS -->
     <div class="footer-actions">
-      <button class="action-btn" onclick="openScorecard()">
+      <button class="action-btn" onclick="openReportCard()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6m-6 4h6m-6-8h6"/></svg>
-        WEEKLY SCORECARD
+        FULL REPORT CARD
       </button>
       <button class="action-btn" onclick="copyWeeklySummary()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
@@ -849,9 +987,7 @@
         <div class="modal-title">CHOOSE ACCENT COLOR</div>
         <button class="close-btn" onclick="closeModal('colorModal')">✕</button>
       </div>
-      <div class="color-grid" id="paletteGrid">
-        <!-- Injected dynamically -->
-      </div>
+      <div class="color-grid" id="paletteGrid"></div>
     </div>
   </div>
 
@@ -863,7 +999,6 @@
         <button class="close-btn" onclick="closeModal('choreModal')">✕</button>
       </div>
 
-      <!-- ADD NEW CHORE -->
       <div class="add-chore-box">
         <input type="text" id="newChoreTitle" class="input-text" placeholder="ENTER NEW CHORE NAME...">
         <div class="type-select-wrap">
@@ -884,52 +1019,70 @@
     </div>
   </div>
 
-  <!-- 9:16 SCORECARD MODAL -->
-  <div class="modal-overlay" id="scorecardModal">
-    <div class="modal" style="background: transparent; border: none; box-shadow: none; max-width: 360px;">
-      <div class="scorecard-9-16" id="scorecardElement">
-        <div class="scorecard-header">
-          <svg class="card-badge" viewBox="0 0 120 120">
-            <rect width="120" height="120" rx="28" fill="#13171f" stroke="var(--accent)" stroke-width="4"/>
-            <text x="60" y="52" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="34" fill="var(--accent)" text-anchor="middle" letter-spacing="2">BE</text>
-            <text x="60" y="86" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="900" font-size="22" fill="#f1f5f9" text-anchor="middle" letter-spacing="3">BETTER</text>
-          </svg>
-          <div style="font-size:0.9rem; font-weight:900; color:var(--text); margin-top:4px;">BE A BETTER</div>
-          <div style="font-size:0.6rem; font-weight:800; color:var(--text-muted);" id="cardWeekDate">WEEKLY EXECUTION REPORT</div>
-        </div>
+  <!-- FULL REPORT CARD MODAL -->
+  <div class="modal-overlay" id="reportCardModal">
+    <div class="modal" style="max-width: 520px;">
+      <div class="modal-head">
+        <div class="modal-title">WEEKLY ACCOUNTABILITY REPORT</div>
+        <button class="close-btn" onclick="closeModal('reportCardModal')">✕</button>
+      </div>
 
-        <div class="scorecard-stats">
-          <div class="card-big-num" id="cardTotalPct">0%</div>
-          <div class="card-label">TOTAL WEEKLY DISCIPLINES COMPLETED</div>
-
-          <div class="card-breakdown">
-            <div class="card-stat-col">
-              <div class="card-stat-val" id="cardDailyStat">0/0</div>
-              <div class="card-stat-lbl">DAILY LOGS</div>
-            </div>
-            <div class="card-stat-col" style="border-left:1px solid var(--border); padding-left:14px;">
-              <div class="card-stat-val" id="cardWeeklyStat">0/0</div>
-              <div class="card-stat-lbl">WEEKLY MASTER</div>
-            </div>
+      <div class="report-card-container">
+        <!-- TOP SCORE BLOCK -->
+        <div class="rc-top">
+          <div class="rc-title-block">
+            <div class="rc-title" id="rcWeekTitle">WEEK OF OCT 26 - NOV 1</div>
+            <div class="rc-sub">BASE TARGET: 33 DISCIPLINES + BONUS EXTRA CREDIT</div>
+          </div>
+          <div class="rc-score-badge">
+            <div class="rc-pct" id="rcScorePct">0%</div>
+            <div class="rc-grade" id="rcGradeBadge">MISSION READY</div>
           </div>
         </div>
 
-        <div class="scorecard-footer">
-          STEWARDSHIP • FATHERHOOD • MARRIAGE
+        <!-- 3-COL STATS -->
+        <div class="rc-highlight-grid">
+          <div class="rc-stat-box">
+            <div class="rc-stat-num" id="rcWeekdayTotal">0 / 25</div>
+            <div class="rc-stat-label">WEEKDAY DAILY</div>
+          </div>
+          <div class="rc-stat-box">
+            <div class="rc-stat-num" id="rcWeeklyTotal">0 / 8</div>
+            <div class="rc-stat-label">WEEKLY MASTER</div>
+          </div>
+          <div class="rc-stat-box bonus-box">
+            <div class="rc-stat-num" id="rcBonusTotal">+0 PTS</div>
+            <div class="rc-stat-label">WEEKEND EXTRA CREDIT</div>
+          </div>
         </div>
+
+        <!-- DAY-BY-DAY AUDIT TABLE -->
+        <div style="font-size:0.68rem; font-weight:900; color:var(--text-muted); margin-top:4px;">
+          DAILY LOG BREAKDOWN
+        </div>
+        <table class="rc-table">
+          <thead>
+            <tr>
+              <th>DAY</th>
+              <th>LOGGED</th>
+              <th>TARGET TYPE</th>
+              <th style="text-align:right;">STATUS</th>
+            </tr>
+          </thead>
+          <tbody id="rcTableBody">
+            <!-- Injected dynamically -->
+          </tbody>
+        </table>
       </div>
 
-      <div style="display:flex; gap:10px; margin-top:14px; width:100%;">
-        <button class="btn-submit" style="flex:1;" onclick="copyWeeklySummary()">COPY TEXT SUMMARY</button>
-        <button class="action-btn" style="flex:1; background:var(--surface);" onclick="closeModal('scorecardModal')">CLOSE</button>
+      <div style="display:flex; gap:10px; width:100%;">
+        <button class="btn-submit" style="flex:1;" onclick="copyWeeklySummary()">COPY FULL REPORT</button>
+        <button class="action-btn" style="flex:1; background:var(--surface);" onclick="closeModal('reportCardModal')">CLOSE</button>
       </div>
     </div>
   </div>
 
   <script>
-    // ----------------------------------------------------
-    // CONSTANTS & DEFAULTS
-    // ----------------------------------------------------
     const DEFAULT_DAILY = [
       { id: "d_kids_morning", title: "WAKE UP AND GET THE KIDS READY FOR SCHOOL" },
       { id: "d_trash", title: "TAKE OUT THE TRASH" },
@@ -958,22 +1111,18 @@
       { id: "violet", name: "AMETHYST", hex: "#a855f7", glow: "rgba(168, 85, 247, 0.25)", subtle: "rgba(168, 85, 247, 0.12)" }
     ];
 
-    const DAYS = ["MON", "TUE", "WED", "THU", "FRI"];
+    const DAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
-    // ----------------------------------------------------
-    // STATE MANAGEMENT
-    // ----------------------------------------------------
     let state = {
       accent: "green",
       customDaily: null,
       customWeekly: null,
-      weekOffset: 0, // 0 = current week, -1 = last week, etc.
-      activeDayIndex: 0, // 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri
+      weekOffset: 0,
+      activeDayIndex: 0, // 0=Mon, ... 5=Sat, 6=Sun
       newChoreType: "daily",
-      logs: {} // format: { 'YYYY-MM-DD': { choreId: true }, 'YYYY-Wxx': { choreId: true } }
+      logs: {}
     };
 
-    // Load from storage
     function loadSavedState() {
       try {
         const savedAccent = localStorage.getItem("bab_accent");
@@ -991,14 +1140,9 @@
         console.warn("Storage load error:", e);
       }
 
-      // Detect current day of week (Monday=1, Friday=5, Sat=6, Sun=0)
       const now = new Date();
-      const currentDay = now.getDay();
-      if (currentDay >= 1 && currentDay <= 5) {
-        state.activeDayIndex = currentDay - 1;
-      } else {
-        state.activeDayIndex = 5; // Weekend state
-      }
+      const currentDay = now.getDay(); // 0 is Sun, 1 is Mon...
+      state.activeDayIndex = (currentDay === 0) ? 6 : (currentDay - 1);
     }
 
     function saveState() {
@@ -1020,12 +1164,9 @@
       return state.customWeekly || DEFAULT_WEEKLY;
     }
 
-    // ----------------------------------------------------
-    // DATE & WEEK CALCULATIONS
-    // ----------------------------------------------------
     function getMondayOfOffset(offsetWeeks) {
       const now = new Date();
-      const day = now.getDay(); // 0 is Sun, 1 is Mon...
+      const day = now.getDay();
       const diffToMon = (day === 0 ? -6 : 1) - day;
       const monday = new Date(now);
       monday.setDate(now.getDate() + diffToMon + (offsetWeeks * 7));
@@ -1053,9 +1194,9 @@
       return `${y}-${m}-${d}`;
     }
 
-    function getWeekDays(mondayDate) {
+    function getFullWeekDays(mondayDate) {
       const days = [];
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 7; i++) {
         const d = new Date(mondayDate);
         d.setDate(mondayDate.getDate() + i);
         days.push(d);
@@ -1063,9 +1204,6 @@
       return days;
     }
 
-    // ----------------------------------------------------
-    // ACCENT COLOR ENGINE
-    // ----------------------------------------------------
     function applyAccent(paletteId) {
       const pal = PALETTES.find(p => p.id === paletteId) || PALETTES[0];
       state.accent = pal.id;
@@ -1086,20 +1224,15 @@
       `).join("");
     }
 
-    // ----------------------------------------------------
-    // NAVIGATION & SELECTION
-    // ----------------------------------------------------
     function shiftWeek(delta) {
       state.weekOffset += delta;
-      // Default to Monday when navigating weeks
-      if (state.activeDayIndex > 4) state.activeDayIndex = 0;
       renderApp();
     }
 
     function jumpToCurrentWeek() {
       state.weekOffset = 0;
       const currentDay = new Date().getDay();
-      state.activeDayIndex = (currentDay >= 1 && currentDay <= 5) ? (currentDay - 1) : 5;
+      state.activeDayIndex = (currentDay === 0) ? 6 : (currentDay - 1);
       renderApp();
     }
 
@@ -1108,12 +1241,9 @@
       renderApp();
     }
 
-    // ----------------------------------------------------
-    // LOGGING ACTIONS
-    // ----------------------------------------------------
     function toggleDailyChore(choreId) {
       const monday = getMondayOfOffset(state.weekOffset);
-      const weekDays = getWeekDays(monday);
+      const weekDays = getFullWeekDays(monday);
       const targetDate = weekDays[state.activeDayIndex];
       const dateKey = formatDateKey(targetDate);
 
@@ -1136,21 +1266,97 @@
     }
 
     // ----------------------------------------------------
+    // COMPREHENSIVE SCORE & STATS CALCULATION
+    // ----------------------------------------------------
+    function getFullAuditStats() {
+      const monday = getMondayOfOffset(state.weekOffset);
+      const weekDays = getFullWeekDays(monday);
+      const weekKey = getWeekKey(monday);
+      const dailyRoster = getDailyRoster();
+      const weeklyRoster = getWeeklyRoster();
+
+      let weekdayCompleted = 0;
+      const totalWeekdayBase = dailyRoster.length * 5; // Monday through Friday
+
+      let weekendBonusCompleted = 0;
+
+      const dayBreakdown = weekDays.map((d, idx) => {
+        const dKey = formatDateKey(d);
+        const isWeekend = idx >= 5;
+        let count = 0;
+
+        if (state.logs[dKey]) {
+          dailyRoster.forEach(item => {
+            if (state.logs[dKey][item.id]) count++;
+          });
+        }
+
+        if (isWeekend) {
+          weekendBonusCompleted += count;
+        } else {
+          weekdayCompleted += count;
+        }
+
+        return {
+          dayName: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"][idx],
+          shortName: DAYS[idx],
+          dateKey: dKey,
+          isWeekend,
+          completed: count,
+          total: dailyRoster.length
+        };
+      });
+
+      let weeklyMasterCompleted = 0;
+      const totalWeeklyMaster = weeklyRoster.length;
+      if (state.logs[weekKey]) {
+        weeklyRoster.forEach(item => {
+          if (state.logs[weekKey][item.id]) weeklyMasterCompleted++;
+        });
+      }
+
+      // Base store only includes Mon-Fri daily + weekly master chores
+      const baseEarned = weekdayCompleted + weeklyMasterCompleted;
+      const baseTotal = totalWeekdayBase + totalWeeklyMaster;
+      const basePct = baseTotal > 0 ? Math.round((baseEarned / baseTotal) * 100) : 0;
+
+      // Grade classification
+      let grade = "DISCIPLINE FORMING";
+      if (basePct >= 95) grade = "STANDOUT DISCIPLINE";
+      else if (basePct >= 80) grade = "MISSION ACCOMPLISHED";
+      else if (basePct >= 65) grade = "SOLID MOMENTUM";
+      else if (basePct >= 50) grade = "STEADY PACE";
+
+      return {
+        monday,
+        sunday: weekDays[6],
+        weekdayCompleted,
+        totalWeekdayBase,
+        weeklyMasterCompleted,
+        totalWeeklyMaster,
+        weekendBonusCompleted,
+        baseEarned,
+        baseTotal,
+        basePct,
+        grade,
+        dayBreakdown
+      };
+    }
+
+    // ----------------------------------------------------
     // MAIN RENDER PIPELINE
     // ----------------------------------------------------
     function renderApp() {
       const monday = getMondayOfOffset(state.weekOffset);
-      const weekDays = getWeekDays(monday);
+      const weekDays = getFullWeekDays(monday);
       const weekKey = getWeekKey(monday);
-      const friday = weekDays[4];
+      const sunday = weekDays[6];
 
-      // Format Week Label (e.g. "WEEK OF OCT 26 - OCT 30, 2026")
       const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
       const monStr = `${monthNames[monday.getMonth()]} ${monday.getDate()}`;
-      const friStr = `${monthNames[friday.getMonth()]} ${friday.getDate()}, ${friday.getFullYear()}`;
-      document.getElementById("weekRangeLabel").textContent = `WEEK OF ${monStr} - ${friStr}`;
+      const sunStr = `${monthNames[sunday.getMonth()]} ${sunday.getDate()}, ${sunday.getFullYear()}`;
+      document.getElementById("weekRangeLabel").textContent = `WEEK OF ${monStr} - ${sunStr}`;
 
-      // Status indicator
       const statusBadge = document.getElementById("weekStatusBadge");
       const jumpBtn = document.getElementById("jumpCurrentBtn");
       if (state.weekOffset === 0) {
@@ -1163,10 +1369,9 @@
         jumpBtn.style.display = "inline-block";
       }
 
-      // Check today's calendar string for active dot
       const todayStr = formatDateKey(new Date());
 
-      // Render 5 Day Tabs
+      // Render 7 Day Tabs (Mon-Sun)
       const tabsContainer = document.getElementById("dayTabsContainer");
       tabsContainer.innerHTML = weekDays.map((d, idx) => {
         const dKey = formatDateKey(d);
@@ -1174,53 +1379,65 @@
         const doneDaily = dailyItems.filter(item => state.logs[dKey] && state.logs[dKey][item.id]).length;
         const isToday = (todayStr === dKey);
         const isActive = (state.activeDayIndex === idx);
+        const isWeekend = idx >= 5;
 
         return `
-          <button class="tab-btn ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}" onclick="selectDay(${idx})">
+          <button class="tab-btn ${isWeekend ? 'weekend-tab' : ''} ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}" onclick="selectDay(${idx})">
             <span>${DAYS[idx]}</span>
-            <span class="tab-count">${doneDaily}/${dailyItems.length}</span>
+            <span class="tab-count">${isWeekend ? `+${doneDaily}` : `${doneDaily}/${dailyItems.length}`}</span>
           </button>
         `;
       }).join("");
 
-      // Handle Weekend View vs Weekday View
-      const isWeekend = (state.activeDayIndex > 4);
-      const contentArea = document.getElementById("contentArea");
-      const weekendCard = document.getElementById("weekendCard");
-
-      if (isWeekend) {
-        contentArea.style.display = "none";
-        weekendCard.style.display = "block";
-        document.getElementById("activeDayLabel").textContent = "WEEKEND REST PROTOCOL";
-        document.getElementById("activeProgressStats").textContent = "FAMILY FOCUS";
-        document.getElementById("progressBarFill").style.width = "100%";
-        return;
-      } else {
-        contentArea.style.display = "block";
-        weekendCard.style.display = "none";
-      }
-
-      // Render Active Weekday Chores
+      // Active view setup
+      const isWeekend = (state.activeDayIndex >= 5);
+      const bonusBanner = document.getElementById("bonusBanner");
+      const progressBarFill = document.getElementById("progressBarFill");
       const activeDate = weekDays[state.activeDayIndex];
       const activeDateKey = formatDateKey(activeDate);
-      const activeDayName = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"][state.activeDayIndex];
+      const activeDayName = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"][state.activeDayIndex];
 
       const dailyRoster = getDailyRoster();
       const weeklyRoster = getWeeklyRoster();
+      const doneDailyCount = dailyRoster.filter(i => state.logs[activeDateKey] && state.logs[activeDateKey][i.id]).length;
+
+      if (isWeekend) {
+        bonusBanner.style.display = "flex";
+        progressBarFill.classList.add("bonus-fill");
+        document.getElementById("dailySectionTitle").textContent = "WEEKEND EXTRA CREDIT";
+        document.getElementById("dailySectionBadge").textContent = "DOES NOT PENALIZE STORE";
+        document.getElementById("dailySectionBadge").className = "section-badge gold";
+
+        const bonusPct = Math.round((doneDailyCount / dailyRoster.length) * 100);
+        document.getElementById("activeDayLabel").textContent = `${activeDayName} (EXTRA CREDIT BONUS)`;
+        document.getElementById("activeProgressStats").textContent = `+${doneDailyCount} BONUS PTS LOGGED (${bonusPct}%)`;
+        progressBarFill.style.width = `${bonusPct}%`;
+      } else {
+        bonusBanner.style.display = "none";
+        progressBarFill.classList.remove("bonus-fill");
+        document.getElementById("dailySectionTitle").textContent = "DAILY DISCIPLINES";
+        document.getElementById("dailySectionBadge").textContent = "RESETS EVERY DAY";
+        document.getElementById("dailySectionBadge").className = "section-badge";
+
+        const dayPct = Math.round((doneDailyCount / dailyRoster.length) * 100);
+        document.getElementById("activeDayLabel").textContent = `${activeDayName} EXECUTION`;
+        document.getElementById("activeProgressStats").textContent = `${doneDailyCount} / ${dailyRoster.length} COMPLETED (${dayPct}%)`;
+        progressBarFill.style.width = `${dayPct}%`;
+      }
 
       // Render Daily List
       const dailyList = document.getElementById("dailyList");
       dailyList.innerHTML = dailyRoster.map(item => {
         const isDone = Boolean(state.logs[activeDateKey] && state.logs[activeDateKey][item.id]);
         return `
-          <div class="chore-card ${isDone ? 'done' : ''}" onclick="toggleDailyChore('${item.id}')">
+          <div class="chore-card ${isDone ? 'done' : ''} ${isDone && isWeekend ? 'bonus-done' : ''}" onclick="toggleDailyChore('${item.id}')">
             <div class="chore-left">
               <div class="checkbox">
                 ${isDone ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
               </div>
               <span class="chore-title">${item.title}</span>
             </div>
-            <span class="chore-tag">DAILY</span>
+            <span class="chore-tag">${isWeekend ? '+BONUS' : 'DAILY'}</span>
           </div>
         `;
       }).join("");
@@ -1241,15 +1458,6 @@
           </div>
         `;
       }).join("");
-
-      // Calculate Day Progress
-      const doneDailyCount = dailyRoster.filter(i => state.logs[activeDateKey] && state.logs[activeDateKey][i.id]).length;
-      const totalDaily = dailyRoster.length;
-      const dayPct = totalDaily > 0 ? Math.round((doneDailyCount / totalDaily) * 100) : 0;
-
-      document.getElementById("activeDayLabel").textContent = `${activeDayName} EXECUTION`;
-      document.getElementById("activeProgressStats").textContent = `${doneDailyCount} / ${totalDaily} COMPLETED (${dayPct}%)`;
-      document.getElementById("progressBarFill").style.width = `${dayPct}%`;
     }
 
     // ----------------------------------------------------
@@ -1339,87 +1547,96 @@
     }
 
     // ----------------------------------------------------
-    // 9:16 SCORECARD & TEXT EXPORT
+    // FULL REPORT CARD MODAL & SUMMARY EXPORT
     // ----------------------------------------------------
-    function getWeekTallyStats() {
-      const monday = getMondayOfOffset(state.weekOffset);
-      const weekDays = getWeekDays(monday);
-      const weekKey = getWeekKey(monday);
-      const dailyRoster = getDailyRoster();
-      const weeklyRoster = getWeeklyRoster();
+    function openReportCard() {
+      const stats = getFullAuditStats();
+      const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+      const dateRangeStr = `${monthNames[stats.monday.getMonth()]} ${stats.monday.getDate()} - ${monthNames[stats.sunday.getMonth()]} ${stats.sunday.getDate()}, ${stats.sunday.getFullYear()}`;
 
-      let dailyCompleted = 0;
-      const totalDailySlots = dailyRoster.length * 5;
+      document.getElementById("rcWeekTitle").textContent = `WEEK OF ${dateRangeStr}`;
+      document.getElementById("rcScorePct").textContent = `${stats.basePct}%`;
+      document.getElementById("rcGradeBadge").textContent = stats.grade;
+      document.getElementById("rcWeekdayTotal").textContent = `${stats.weekdayCompleted} / ${stats.totalWeekdayBase}`;
+      document.getElementById("rcWeeklyTotal").textContent = `${stats.weeklyMasterCompleted} / ${stats.totalWeeklyMaster}`;
+      document.getElementById("rcBonusTotal").textContent = `+${stats.weekendBonusCompleted} PTS`;
 
-      weekDays.forEach(d => {
-        const dKey = formatDateKey(d);
-        if (state.logs[dKey]) {
-          dailyRoster.forEach(item => {
-            if (state.logs[dKey][item.id]) dailyCompleted++;
-          });
+      const tbody = document.getElementById("rcTableBody");
+      let tableHtml = "";
+
+      stats.dayBreakdown.forEach(day => {
+        const isBonus = day.isWeekend;
+        const isComplete = day.completed === day.total;
+        const hasSome = day.completed > 0;
+
+        let pillHtml = `<span class="status-pill empty">REST / INCOMPLETE</span>`;
+        if (isBonus) {
+          pillHtml = hasSome 
+            ? `<span class="status-pill bonus">+${day.completed} EXTRA CREDIT</span>` 
+            : `<span class="status-pill empty">REST DAY (NO PENALTY)</span>`;
+        } else if (isComplete) {
+          pillHtml = `<span class="status-pill done">100% COMPLETE</span>`;
+        } else if (hasSome) {
+          pillHtml = `<span class="status-pill done">${day.completed}/${day.total} LOGGED</span>`;
         }
+
+        tableHtml += `
+          <tr class="${isBonus ? 'weekend-row' : ''}">
+            <td>${day.dayName}</td>
+            <td>${day.completed} / ${day.total}</td>
+            <td>${isBonus ? 'EXTRA CREDIT BONUS' : 'DAILY CORE'}</td>
+            <td style="text-align:right;">${pillHtml}</td>
+          </tr>
+        `;
       });
 
-      let weeklyCompleted = 0;
-      const totalWeeklySlots = weeklyRoster.length;
-      if (state.logs[weekKey]) {
-        weeklyRoster.forEach(item => {
-          if (state.logs[weekKey][item.id]) weeklyCompleted++;
-        });
-      }
+      // Weekly master chores row
+      const masterComplete = stats.weeklyMasterCompleted === stats.totalWeeklyMaster;
+      tableHtml += `
+        <tr style="border-top: 1px solid var(--border-strong);">
+          <td>WEEKLY MASTER</td>
+          <td>${stats.weeklyMasterCompleted} / ${stats.totalWeeklyMaster}</td>
+          <td>HOUSEHOLD STEWARDSHIP</td>
+          <td style="text-align:right;">
+            <span class="status-pill ${masterComplete ? 'done' : 'empty'}">
+              ${stats.weeklyMasterCompleted}/${stats.totalWeeklyMaster} DONE
+            </span>
+          </td>
+        </tr>
+      `;
 
-      const totalCompleted = dailyCompleted + weeklyCompleted;
-      const totalPossible = totalDailySlots + totalWeeklySlots;
-      const totalPct = totalPossible > 0 ? Math.round((totalCompleted / totalPossible) * 100) : 0;
-
-      return {
-        dailyCompleted,
-        totalDailySlots,
-        weeklyCompleted,
-        totalWeeklySlots,
-        totalCompleted,
-        totalPossible,
-        totalPct,
-        monday,
-        friday: weekDays[4]
-      };
-    }
-
-    function openScorecard() {
-      const stats = getWeekTallyStats();
-      const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-      const dateRangeStr = `${monthNames[stats.monday.getMonth()]} ${stats.monday.getDate()} - ${monthNames[stats.friday.getMonth()]} ${stats.friday.getDate()}, ${stats.friday.getFullYear()}`;
-
-      document.getElementById("cardWeekDate").textContent = `WEEK OF ${dateRangeStr}`;
-      document.getElementById("cardTotalPct").textContent = `${stats.totalPct}%`;
-      document.getElementById("cardDailyStat").textContent = `${stats.dailyCompleted}/${stats.totalDailySlots}`;
-      document.getElementById("cardWeeklyStat").textContent = `${stats.weeklyCompleted}/${stats.totalWeeklySlots}`;
-
-      openModal("scorecardModal");
+      tbody.innerHTML = tableHtml;
+      openModal("reportCardModal");
     }
 
     function copyWeeklySummary() {
-      const stats = getWeekTallyStats();
+      const stats = getFullAuditStats();
       const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-      const dateRangeStr = `${monthNames[stats.monday.getMonth()]} ${stats.monday.getDate()} - ${monthNames[stats.friday.getMonth()]} ${stats.friday.getDate()}, ${stats.friday.getFullYear()}`;
+      const dateRangeStr = `${monthNames[stats.monday.getMonth()]} ${stats.monday.getDate()} - ${monthNames[stats.sunday.getMonth()]} ${stats.sunday.getDate()}, ${stats.sunday.getFullYear()}`;
 
-      const text = `BE A BETTER - WEEKLY DISCIPLINE REPORT\n` +
+      let breakdownText = "";
+      stats.dayBreakdown.forEach(d => {
+        breakdownText += `• ${d.dayName}: ${d.completed}/${d.total} ${d.isWeekend ? '(BONUS)' : ''}\n`;
+      });
+
+      const text = `BE A BETTER - WEEKLY ACCOUNTABILITY REPORT\n` +
                    `WEEK: ${dateRangeStr}\n` +
-                   `TOTAL COMPLETION: ${stats.totalPct}%\n` +
-                   `DAILY DISCIPLINES: ${stats.dailyCompleted}/${stats.totalDailySlots}\n` +
-                   `WEEKLY MASTER CHORES: ${stats.weeklyCompleted}/${stats.totalWeeklySlots}\n` +
+                   `OVERALL BASE SCORE: ${stats.basePct}% (${stats.grade})\n` +
+                   `WEEKDAY DISCIPLINES: ${stats.weekdayCompleted}/${stats.totalWeekdayBase}\n` +
+                   `WEEKLY MASTER CHORES: ${stats.weeklyMasterCompleted}/${stats.totalWeeklyMaster}\n` +
+                   `WEEKEND EXTRA CREDIT BONUS: +${stats.weekendBonusCompleted} POINTS\n\n` +
+                   `DAY BREAKDOWN:\n` +
+                   breakdownText +
+                   `• WEEKLY MASTER: ${stats.weeklyMasterCompleted}/${stats.totalWeeklyMaster}\n\n` +
                    `STEWARDSHIP FOR MY WIFE AND CHILDREN.`;
 
       navigator.clipboard.writeText(text).then(() => {
-        alert("WEEKLY REPORT COPIED TO CLIPBOARD!");
+        alert("FULL REPORT CARD COPIED TO CLIPBOARD!");
       }).catch(() => {
-        prompt("COPY YOUR WEEKLY REPORT:", text);
+        prompt("COPY YOUR REPORT CARD:", text);
       });
     }
 
-    // ----------------------------------------------------
-    // MODAL UTILS
-    // ----------------------------------------------------
     function openModal(id) {
       if (id === "colorModal") renderPaletteGrid();
       if (id === "choreModal") renderManageList();
@@ -1430,16 +1647,12 @@
       document.getElementById(id).classList.remove("open");
     }
 
-    // Close modal when tapping outside card
     window.addEventListener("click", (e) => {
       if (e.target.classList.contains("modal-overlay")) {
         e.target.classList.remove("open");
       }
     });
 
-    // ----------------------------------------------------
-    // INITIALIZATION
-    // ----------------------------------------------------
     loadSavedState();
     applyAccent(state.accent);
     renderApp();
